@@ -106,10 +106,4 @@
 
 Shader 位于 `Assets/Shader/`，辅助代码位于 `Assets/Scripts/`，展示场景为 `Assets/Scenes/SampleScene.unity`。`image/` 中包含截图和视频。
 
-制作版本：**Unity 6000.3.11f1 / URP 17.3.0**。主场景与视频使用 Git LFS 存储。
-
-## 参考与许可
-
-- **t3ssel8r**：3D 像素风渲染思路参考。
-- [Cyanilux / URP Shader Graph Custom Lighting](https://github.com/Cyanilux/URP_ShaderGraphCustomLighting)：自定义光照函数与子图，保留其 [MIT 许可证](Assets/URP_ShaderGraphCustomLighting-6000.1/LICENSE)。相关 HLSL 副本同样遵循该许可。
-- 其余代码与美术资源尚未授予统一开源许可证；第三方内容遵循各自许可。
+制作版本：**Unity 6000.3.11f1 / URP 17.3.0**。
