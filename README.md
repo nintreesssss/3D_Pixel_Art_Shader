@@ -4,14 +4,14 @@
 
 实现方法参考了 **t3ssel8r** 的 3D 像素风渲染思路。
 
-![遗迹庭院](image/1.png)
-![云影效果](image/2.png)
-
 ## 视频展示
 
 [![场景动态展示](image/preview.gif)](https://github.com/nintreesssss/3D-Pixel-Art/blob/main/image/press_Movie_005.mp4)
 
 [查看完整视频](https://github.com/nintreesssss/3D-Pixel-Art/blob/main/image/press_Movie_005.mp4)
+
+![遗迹庭院](image/1.png)
+![云影效果](image/2.png)
 
 ## Shader 参数
 
