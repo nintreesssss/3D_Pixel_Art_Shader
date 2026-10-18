@@ -9,7 +9,9 @@
 
 ## 视频展示
 
-[演示 1](image/Movie_002.mp4) · [演示 2](image/Movie_003.mp4) · [演示 3](image/Movie_004.mp4) · [演示 4](image/Movie_005.mp4)
+[![场景动态展示](image/preview.gif)](https://github.com/nintreesssss/3D-Pixel-Art/blob/main/image/press_Movie_005.mp4)
+
+[查看完整视频](https://github.com/nintreesssss/3D-Pixel-Art/blob/main/image/press_Movie_005.mp4)
 
 ## Shader 参数
 

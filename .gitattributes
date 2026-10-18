@@ -6,3 +6,6 @@
 *.md text eol=lf
 Assets/Scenes/SampleScene.unity filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
+
+# Small demo video served directly from the repository
+image/press_Movie_005.mp4 -filter -diff -merge -text
