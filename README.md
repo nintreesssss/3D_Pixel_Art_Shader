@@ -1,70 +1,115 @@
 # 3D Pixel Art
 
-基于 **Unity 6 / URP** 的 3D 像素风场景与风格化 Shader 实验工程。通过卡通分层光照、描边、动态植被、水面与云影，构建像素画观感的遗迹庭院。
+几个基于 **Unity / URP** 的像素风 Shader，包含卡通光照与描边、草地、树叶、水面，以及能量球、符文和云影效果。附带一个展示场景和相关素材。
+
+实现方法参考了 **t3ssel8r** 的 3D 像素风渲染思路。
 
 ![遗迹庭院](image/1.png)
 ![云影效果](image/2.png)
 
 ## 视频展示
 
-点击链接查看或下载原始 MP4：
+[演示 1](image/Movie_002.mp4) · [演示 2](image/Movie_003.mp4) · [演示 3](image/Movie_004.mp4) · [演示 4](image/Movie_005.mp4)
 
-- [演示 1](image/Movie_002.mp4)
-- [演示 2](image/Movie_003.mp4)
-- [演示 3](image/Movie_004.mp4)
-- [演示 4](image/Movie_005.mp4)
+## Shader 参数
 
-## 工程内容
+下面列出几个主要参数，名称与材质面板对应。
 
-- `Cartoon.shadergraph`：卡通分层光照、描边与云影相关参数。
-- `Grass.shadergraph`、`Leaf.shadergraph`：草与树叶材质，配合风场子图。
-- `Water.shadergraph`：水面扰动、泡沫与反射子图。
-- 手写 Shader：能量球、符文图集、云影 Cookie。
-- `SampleScene.unity`：包含地形、植被、石柱、水池及特效的展示场景。
-- 辅助脚本：相机环绕、树叶生成与云影控制。
+### 卡通光照与描边 · `Cartoon.shadergraph`
 
-## 环境与启动
-
-工程版本为 **Unity 6000.3.11f1**，渲染管线为 **URP 17.3.0**。其他 Unity 版本尚未验证。包依赖由 `Packages/manifest.json` 和 `packages-lock.json` 记录，包括 Input System、Cinemachine 等。
-
-主场景约 144 MB，场景与视频使用 **Git LFS** 存储。请先安装 [Git LFS](https://git-lfs.com/)，再克隆工程：
-
-```bash
-git lfs install
-git clone https://github.com/nintreesssss/3D-Pixel-Art.git
-cd 3D-Pixel-Art
-git lfs pull
-```
-
-1. 在 Unity Hub 中使用 **Add project from disk** 添加仓库根目录。
-2. 使用 Unity **6000.3.11f1** 打开，等待包安装与资源导入。
-3. 打开 `Assets/Scenes/SampleScene.unity`，进入 Play 模式。
-4. 使用 **A / D** 键让 `CinemaControl` 相机绕目标旋转。
-
-首次导入较大的场景需要等待。建议通过 Git 克隆；ZIP 下载可能未包含完整 LFS 资源。若场景内容以 `version https://git-lfs.github.com/spec/v1` 开头，请运行 `git lfs pull`。
-
-## 目录结构
-
-| 路径 | 内容 |
+| 参数 | 作用 |
 | --- | --- |
-| `Assets/Shader/` | Shader Graph、手写 Shader、共享子图 |
-| `Assets/Scripts/` | C# 与 HLSL 辅助代码 |
-| `Assets/Materials/` | 场景材质 |
-| `Assets/Model/` | 模型与 Mesh |
-| `Assets/Profabs/` | 植被预制体，沿用原目录名 |
-| `Assets/Texture/` | 植被、噪声、符文等纹理 |
-| `Assets/Scenes/` | 主场景与烘焙 Mesh |
-| `Assets/Settings/` | URP、Renderer 和 Volume 配置 |
-| `Packages/` | 包依赖和版本锁定 |
-| `ProjectSettings/` | Unity 工程配置 |
-| `image/` | 两张截图和四段演示视频 |
+| `MainColor` / `ShadowColor` | 主色与阴影颜色 |
+| `Brightness` | 调整亮度 |
+| `Shades` | 控制卡通光照的明暗分层 |
+| `MinimumDarkness` | 调整暗部的最低亮度 |
+| `UseShadow` | 控制阴影的参与程度 |
+| `OutlineEnabled` / `OutlineColor` | 描边开关与颜色 |
+| `DepthThreshold` | 深度边缘检测阈值，影响轮廓识别 |
+| `NormalThreshold` | 法线边缘检测阈值，影响表面转折线的识别 |
+| `DepthEdgeStrength` | 深度边缘的强度 |
+| `DepthNormalStrength` | 法线边缘的强度 |
+| `NormalBias` | 法线边缘检测的方向偏置 |
+| `CloudOn` | 云影开关 |
 
-资源路径与 `.meta` 配对保留，避免破坏 Unity GUID 引用。缓存、日志和 IDE 生成文件不纳入版本控制。
+### 草地与树叶 · `Grass.shadergraph` / `Leaf.shadergraph`
 
-## 第三方内容与许可
+| 参数 | 作用 |
+| --- | --- |
+| `Texture2D` | 草或树叶的形状贴图 |
+| `BaseColor` | 基础颜色 |
+| `PatchColor1` / `PatchColor2` | 色块变化的两种颜色 |
+| `NoiseScale` | 调整噪声色块的分布尺度 |
+| `风向` | 风的方向 |
+| `WindStrength` | 风吹动的强度 |
+| `WindMovement` | 风场的移动参数 |
+| `WindDensity` | 风场的疏密程度 |
+| `WindColor` | 风扫过时的颜色 |
+| `启用WindColor`（草）/ `UseWindColor`（树叶） | 控制风场颜色的混合 |
+| `UseShadow` | 控制阴影的参与程度 |
 
-- 包含 [Cyanilux / URP Shader Graph Custom Lighting](https://github.com/Cyanilux/URP_ShaderGraphCustomLighting)，MIT 许可证保留于 [`Assets/URP_ShaderGraphCustomLighting-6000.1/LICENSE`](Assets/URP_ShaderGraphCustomLighting-6000.1/LICENSE)。相关 HLSL 副本也遵循该许可。
-- 本地 `Assets/nTools/PrefabPainter` 是 Asset Store 编辑器工具，不随仓库分发。主场景中对应的隐藏编辑器设置对象已清理，已摆放的场景物体保留。
-- 其余代码和美术资源尚未授予统一开源许可证；第三方内容遵循各自许可。
+### 水面 · `Water.shadergraph`
 
-截图与视频为效果参考。实际表现与分辨率、相机和质量设置有关。主场景包含 Pixel Perfect Camera，参考分辨率为 320 × 180；像素风效果结合了相机设置与风格化材质。仓库整理阶段尚未执行 Unity 编辑器运行验证。
+| 参数 | 作用 |
+| --- | --- |
+| `Color` / `Brightness` | 水面颜色与亮度 |
+| `Shades` / `MinimumDarkness` | 明暗分层与暗部最低亮度 |
+| `DistortionTexture` | 水面扰动使用的纹理 |
+| `DistortionTiling` | 扰动纹理的平铺尺度 |
+| `DistortionDirection` / `DistortionSpeed` | 扰动的方向与速度 |
+| `DistortionStrength` | 扰动强度 |
+| `FoamAmount` | 泡沫量 |
+| `FoamScale` / `FoamSpeed` | 泡沫的尺度与运动速度 |
+| `ReflectionStrength` | 反射强度 |
+| `ReflectionDistortion` | 反射的扭曲程度 |
+| `TintStrength` / `TintBrightness` | 染色强度与亮度 |
+
+### 能量球 · `CartoonEnergySphere_URP_Wavy.shader`
+
+| 参数 | 作用 |
+| --- | --- |
+| `Base Color` / `Inner Color` | 球体底色与内部能量颜色 |
+| `Overall Brightness` | 整体亮度 |
+| `Rim Color` / `Rim Width` / `Rim Intensity` | 边缘光的颜色、宽度与强度 |
+| `Rim Toon Steps` | 边缘光的分层数量 |
+| `Edge Wave Strength` / `Edge Wave Speed` | 边缘波动的强度与速度 |
+| `Ring Count` / `Ring Width` / `Ring Speed` | 能量环的数量、宽度与运动速度 |
+| `Pulse Speed` / `Pulse Amount` | 明暗脉冲的速度与幅度 |
+| `Vertex Wave Amount` | 球体表面的顶点形变幅度 |
+
+### 符文 · `StylizedMagicRuneAtlas.shader`
+
+| 参数 | 作用 |
+| --- | --- |
+| `Rune Mask Or Atlas` | 符文遮罩或图集 |
+| `Atlas Columns` / `Atlas Rows` / `Rune Index` | 图集列数、行数与符文编号 |
+| `Mask Threshold` / `Mask Softness` | 遮罩阈值与边缘柔和程度 |
+| `Rune Color` / `Brightness` | 符文颜色与亮度 |
+| `Halo Width UV` / `Halo Strength` | 光晕宽度与强度 |
+| `Flow Speed` / `Flow Width` / `Flow Strength` | 流光扫过的速度、宽度与强度 |
+| `Pulse Speed` / `Pulse Amount` | 呼吸闪烁的速度与幅度 |
+
+### 云影 · `StylizedCloudCookieGenerator.shader`
+
+云影通过 `StylizedCloudShadowController` 生成主方向光的 Cookie，主要参数在脚本面板中调整：
+
+| 参数 | 作用 |
+| --- | --- |
+| `cookieWorldSize` | 云影在世界空间中的平铺尺寸 |
+| `primaryScale` / `secondaryScale` | 两层噪声的尺度 |
+| `primarySpeed` / `secondarySpeed` | 两层云影的移动速度与方向 |
+| `threshold` / `edgeSoftness` | 云形阈值与边缘柔和程度 |
+| `shadowStrength` | 云影深浅 |
+| `gatherScatterAmount` / `gatherScatterSpeed` | 云层聚散的幅度与速度 |
+
+## 文件位置
+
+Shader 位于 `Assets/Shader/`，辅助代码位于 `Assets/Scripts/`，展示场景为 `Assets/Scenes/SampleScene.unity`。`image/` 中包含截图和视频。
+
+制作版本：**Unity 6000.3.11f1 / URP 17.3.0**。主场景与视频使用 Git LFS 存储。
+
+## 参考与许可
+
+- **t3ssel8r**：3D 像素风渲染思路参考。
+- [Cyanilux / URP Shader Graph Custom Lighting](https://github.com/Cyanilux/URP_ShaderGraphCustomLighting)：自定义光照函数与子图，保留其 [MIT 许可证](Assets/URP_ShaderGraphCustomLighting-6000.1/LICENSE)。相关 HLSL 副本同样遵循该许可。
+- 其余代码与美术资源尚未授予统一开源许可证；第三方内容遵循各自许可。
